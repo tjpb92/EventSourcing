@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.2
+ * @version 0.1.3
  */
 public class DistributionInscriptionTest {
 
@@ -63,6 +63,7 @@ public class DistributionInscriptionTest {
         DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
         InscriptionStarted result = distributionInscription.startInscription(TSTUUID);
         System.out.println("result:" + result);
+        System.out.println("distributionInscription:" + distributionInscription);
 
         assertEquals(expectedResult, result);
     }
@@ -80,12 +81,13 @@ public class DistributionInscriptionTest {
         DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
         DistributorRegistered result = distributionInscription.registerDistributor(TSTUUID, TSTDISTRIBUTOR);
         System.out.println("result:" + result);
+        System.out.println("distributionInscription:" + distributionInscription);
 
         assertEquals(expectedResult, result);
     }
 
     /**
-     * Test Distributorunregistered event
+     * Test DistributorUnregistered event
      */
     @Test
     public void testDistributorUnregistered() {
@@ -97,6 +99,7 @@ public class DistributionInscriptionTest {
         DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
         DistributorUnregistered result = distributionInscription.unregisterDistributor(TSTUUID, TSTDISTRIBUTOR);
         System.out.println("result:" + result);
+        System.out.println("distributionInscription:" + distributionInscription);
 
         assertEquals(expectedResult, result);
     }
