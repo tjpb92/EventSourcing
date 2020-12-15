@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eventsourcing;
 
 import org.junit.After;
@@ -13,11 +8,15 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
+ * Classe servant à tester le projet EventSourcing
  *
  * @author Thierry Baribaud
+ * @author Anthony Guerot
+ * @version 0.1.1
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({eventsourcing.EventSourcingTest.class})
+@Suite.SuiteClasses({eventsourcing.DistributionInscriptionTest.class,
+    eventsourcing.DistributorTest.class})
 public class EventsourcingSuite {
 
     @BeforeClass
@@ -35,5 +34,5 @@ public class EventsourcingSuite {
     @After
     public void tearDown() throws Exception {
     }
-    
+
 }
