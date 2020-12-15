@@ -8,7 +8,7 @@ import java.util.UUID;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.1
+ * @version 0.1.2
  */
 public class DistributionInscription {
     
@@ -29,7 +29,19 @@ public class DistributionInscription {
     public UUID getUuid() {
         return uuid;
     }
-
+    
+    public InscriptionStarted startInscription(UUID uuid) {
+        return new InscriptionStarted(uuid);
+    }
+    
+    public DistributorRegistered registerDistributor(UUID uuid, Distributor distributor) {
+        return new DistributorRegistered(uuid, distributor);
+    }
+    
+    public DistributorUnregistered unregisterDistributor(UUID uuid, Distributor distributor) {
+        return new DistributorUnregistered(uuid, distributor);
+    }
+     
     @Override
     public int hashCode() {
         int hash = 3;

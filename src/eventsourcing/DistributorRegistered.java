@@ -7,9 +7,9 @@ import java.util.UUID;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.1
+ * @version 0.1.2
  */
-public abstract class DistributorRegistered extends DistributionInscriptionEvent {
+public class DistributorRegistered extends DistributionInscriptionEvent {
     
     private Distributor distributor;
 
