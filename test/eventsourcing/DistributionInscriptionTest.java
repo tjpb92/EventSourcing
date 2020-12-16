@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.3
+ * @version 0.1.4
  */
 public class DistributionInscriptionTest {
 
@@ -69,6 +69,59 @@ public class DistributionInscriptionTest {
     }
 
     /**
+     * Test cannot perform two consecutive startInscription() command with the same aggregate
+     */
+    @Test
+    public void testCannotPerformTwoStartInscriptionCommand() {
+        System.out.println("cannotPerformTwoStartInscriptionCommand");
+
+        DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
+        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(TSTUUID);
+
+        InscriptionStarted nextInscriptionStarted = distributionInscription.startInscription(TSTUUID);
+
+        assertNotNull(firstInscriptionStarted);
+        assertNull(nextInscriptionStarted);
+    }
+
+    /**
+     * Test cannot perform two consecutive registerDistributor() command with 
+     * the same distributor on the same aggregate
+     */
+    @Test
+    public void testCannotPerformTwoRegisterDistributorCommand() {
+        System.out.println("cannotPerformTwoRegisterDistributorCommand");
+
+        DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
+        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(TSTUUID);
+        DistributorRegistered firstDistributorRegistered = distributionInscription.registerDistributor(TSTUUID, TSTDISTRIBUTOR);
+
+        DistributorRegistered nextDistributorRegistered = distributionInscription.registerDistributor(TSTUUID, TSTDISTRIBUTOR);
+
+        assertNotNull("Event should be not null", firstDistributorRegistered);
+        assertNull("Event should be null", nextDistributorRegistered);
+    }
+
+    /**
+     * Test cannot perform two consecutive unregisterDistributor() command with 
+     * the same distributor on the same aggregate
+     */
+    @Test
+    public void testCannotPerformTwoUnregisterDistributorCommand() {
+        System.out.println("cannotPerformTwoUnregisterDistributorCommand");
+
+        DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
+        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(TSTUUID);
+        
+        DistributorUnregistered firstDistributorUnregistered = distributionInscription.unregisterDistributor(TSTUUID, TSTDISTRIBUTOR);
+
+        DistributorUnregistered nextDistributorUnregistered = distributionInscription.unregisterDistributor(TSTUUID, TSTDISTRIBUTOR);
+
+        assertNotNull("Event should be not null", firstDistributorUnregistered);
+        assertNull("Event should be null", nextDistributorUnregistered);
+    }
+
+    /**
      * Test DistributorRegistered event
      */
     @Test
@@ -76,14 +129,24 @@ public class DistributionInscriptionTest {
         System.out.println("distributorRegistered");
 
         DistributorRegistered expectedResult = new DistributorRegistered(TSTUUID, TSTDISTRIBUTOR);
-        System.out.println("expectedResult:" + expectedResult);
+        
+        DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
+        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(TSTUUID);
+        DistributorRegistered result = distributionInscription.registerDistributor(TSTUUID, TSTDISTRIBUTOR);
+
+        assertEquals(expectedResult, result);
+    }
+
+    /**
+     * Test cannot registerDistributor if inscription is not started
+     */
+    @Test
+    public void testCannotRegisterDistributorIfInscriptionNtStarted() {
+        System.out.println("cannotRegisterDistributorIfInscriptionNtStarted");
 
         DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
         DistributorRegistered result = distributionInscription.registerDistributor(TSTUUID, TSTDISTRIBUTOR);
-        System.out.println("result:" + result);
-        System.out.println("distributionInscription:" + distributionInscription);
-
-        assertEquals(expectedResult, result);
+        assertNull("Event should be null", result);
     }
 
     /**
@@ -94,12 +157,10 @@ public class DistributionInscriptionTest {
         System.out.println("distributorUnregistered");
 
         DistributorUnregistered expectedResult = new DistributorUnregistered(TSTUUID, TSTDISTRIBUTOR);
-        System.out.println("expectedResult:" + expectedResult);
 
         DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
+        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(TSTUUID);
         DistributorUnregistered result = distributionInscription.unregisterDistributor(TSTUUID, TSTDISTRIBUTOR);
-        System.out.println("result:" + result);
-        System.out.println("distributionInscription:" + distributionInscription);
 
         assertEquals(expectedResult, result);
     }

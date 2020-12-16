@@ -1,15 +1,17 @@
 package eventsourcing;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Classe définissant l'aggrégat DistributionInscription
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.3
+ * @version 0.1.4
  */
 public class DistributionInscription {
 
@@ -38,20 +40,69 @@ public class DistributionInscription {
     }
 
     public InscriptionStarted startInscription(UUID uuid) {
-        InscriptionStarted inscriptionStarted = new InscriptionStarted(uuid);
-        events.add(inscriptionStarted);
+        InscriptionStarted inscriptionStarted = null;
+        List<DistributionInscriptionEvent> inscriptionStartedList = events
+                .stream()
+                .filter(InscriptionStarted.class::isInstance)
+                .collect(Collectors.toList());
+
+        if (inscriptionStartedList.isEmpty()) {
+            inscriptionStarted = new InscriptionStarted(uuid);
+            events.add(inscriptionStarted);
+        }
+        
         return inscriptionStarted;
     }
 
     public DistributorRegistered registerDistributor(UUID uuid, Distributor distributor) {
-        DistributorRegistered distributorRegistered = new DistributorRegistered(uuid, distributor);
-        events.add(distributorRegistered);
+        DistributorRegistered distributorRegistered = null;
+        int nbRegistered = 0;
+        boolean started = false;
+        
+        for(Event event: events) {
+            if (event instanceof InscriptionStarted) {
+                started = true;
+            }
+            if (event instanceof DistributorRegistered) {
+                DistributorRegistered dr = (DistributorRegistered) event;
+                if (dr.getDistributor().equals(distributor)) nbRegistered++;
+            }
+            if (event instanceof DistributorUnregistered) {
+                DistributorUnregistered du = (DistributorUnregistered) event;
+                if (du.getDistributor().equals(distributor)) nbRegistered--;
+            }
+        }
+        if (started && nbRegistered == 0) {
+            distributorRegistered = new DistributorRegistered(uuid, distributor);
+            events.add(distributorRegistered);
+        }
+         
         return distributorRegistered;
     }
 
     public DistributorUnregistered unregisterDistributor(UUID uuid, Distributor distributor) {
-        DistributorUnregistered distributorUnregistered = new DistributorUnregistered(uuid, distributor);
-        events.add(distributorUnregistered);
+        DistributorUnregistered distributorUnregistered = null;
+        int nbRegistered = 0;
+        boolean started = false;
+
+        for(Event event: events) {
+            if (event instanceof InscriptionStarted) {
+                started = true;
+            }
+            if (event instanceof DistributorRegistered) {
+                DistributorRegistered dr = (DistributorRegistered) event;
+                if (dr.getDistributor().equals(distributor)) nbRegistered++;
+            }
+            if (event instanceof DistributorUnregistered) {
+                DistributorUnregistered du = (DistributorUnregistered) event;
+                if (du.getDistributor().equals(distributor)) nbRegistered--;
+            }
+        }
+        if (started && nbRegistered == 0) {
+            distributorUnregistered = new DistributorUnregistered(uuid, distributor);
+            events.add(distributorUnregistered);
+        }
+        
         return distributorUnregistered;
     }
 
