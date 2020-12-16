@@ -1,6 +1,5 @@
 package eventsourcing;
 
-import java.util.UUID;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,13 +12,13 @@ import static org.junit.Assert.*;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.2
+ * @version 0.1.6
  */
 public class DistributorTest {
 
-    private static final UUID TSTUUID = UUID.randomUUID();
-    private static final String TSTNAME = "totolito";
-    private static final String TSTEMAIL = TSTNAME + "@mail.com";
+    private static final DistributorUuid DISTRIBUTORUUID = new DistributorUuid();
+    private static final String NAME = "totolito";
+    private static final String EMAIL = NAME + "@mail.com";
 
     public DistributorTest() {
     }
@@ -44,11 +43,10 @@ public class DistributorTest {
      * Test of getUuid method, of class Distributor.
      */
     @Test
-    public void testGetUuid() {
-        System.out.println("getUuid");
-        Distributor instance = new Distributor(TSTUUID, TSTNAME, TSTEMAIL);
-        UUID expResult = TSTUUID;
-        UUID result = instance.getUuid();
+    public void testDistributorGetUuid() {
+        Distributor instance = new Distributor(DISTRIBUTORUUID, NAME, EMAIL);
+        DistributorUuid expResult = DISTRIBUTORUUID;
+        DistributorUuid result = instance.getUuid();
         assertEquals(expResult, result);
     }
 
@@ -56,10 +54,9 @@ public class DistributorTest {
      * Test of getName method, of class Distributor.
      */
     @Test
-    public void testGetName() {
-        System.out.println("getName");
-        Distributor instance = new Distributor(TSTUUID, TSTNAME, TSTEMAIL);
-        String expResult = TSTNAME;
+    public void testDistributorGetName() {
+        Distributor instance = new Distributor(DISTRIBUTORUUID, NAME, EMAIL);
+        String expResult = NAME;
         String result = instance.getName();
         assertEquals(expResult, result);
     }
@@ -68,10 +65,9 @@ public class DistributorTest {
      * Test of getEmail method, of class Distributor.
      */
     @Test
-    public void testGetEmail() {
-        System.out.println("getEmail");
-        Distributor instance = new Distributor(TSTUUID, TSTNAME, TSTEMAIL);
-        String expResult = TSTEMAIL;
+    public void testDistributorGetEmail() {
+        Distributor instance = new Distributor(DISTRIBUTORUUID, NAME, EMAIL);
+        String expResult = EMAIL;
         String result = instance.getEmail();
         assertEquals(expResult, result);
     }
@@ -80,12 +76,11 @@ public class DistributorTest {
      * Test of toString method, of class Distributor.
      */
     @Test
-    public void testToString() {
-        System.out.println("toString");
-        Distributor instance = new Distributor(TSTUUID, TSTNAME, TSTEMAIL);
+    public void testDistributorToString() {
+        Distributor instance = new Distributor(DISTRIBUTORUUID, NAME, EMAIL);
 //        System.out.println(instance);
-        String expResult = "Distributor{uuid=" + TSTUUID
-                + ", name=" + TSTNAME + ", email=" + TSTEMAIL + "}";
+        String expResult = "Distributor{uuid=" + DISTRIBUTORUUID
+                + ", name=" + NAME + ", email=" + EMAIL + "}";
         String result = instance.toString();
         assertEquals(expResult, result);
     }
@@ -107,10 +102,9 @@ public class DistributorTest {
      * Test of equals method, of class Distributor.
      */
     @Test
-    public void testEquals() {
-        System.out.println("equals");
-        Object obj = new Distributor(TSTUUID, TSTNAME, TSTEMAIL);
-        Distributor instance = new Distributor(TSTUUID, TSTNAME, TSTEMAIL);
+    public void testDistributorEquals() {
+        Object obj = new Distributor(DISTRIBUTORUUID, NAME, EMAIL);
+        Distributor instance = new Distributor(DISTRIBUTORUUID, NAME, EMAIL);
         boolean expResult = true;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
@@ -121,8 +115,7 @@ public class DistributorTest {
      */
     @Test(expected = NullPointerException.class)
     public void testDistributorUuidCannotBeNull() {
-        System.out.println("Distributor's uuid cannot be null");
-        Object obj = new Distributor(null, TSTNAME, TSTEMAIL);
+        Object obj = new Distributor(null, NAME, EMAIL);
     }
 
     /**
@@ -130,8 +123,7 @@ public class DistributorTest {
      */
     @Test(expected = NullPointerException.class)
     public void testDistributorNameCannotBeNull() {
-        System.out.println("Distributor's name cannot be null");
-        Object obj = new Distributor(TSTUUID, null, TSTEMAIL);
+        Object obj = new Distributor(DISTRIBUTORUUID, null, EMAIL);
     }
 
     /**
@@ -139,8 +131,7 @@ public class DistributorTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testDistributorNameCannotBeEmpty() {
-        System.out.println("Distributor's name cannot be empty");
-        Object obj = new Distributor(TSTUUID, "", TSTEMAIL);
+        Object obj = new Distributor(DISTRIBUTORUUID, "", EMAIL);
     }
 
     /**
@@ -148,8 +139,7 @@ public class DistributorTest {
      */
     @Test(expected = NullPointerException.class)
     public void testDistributorEmailCannotBeNull() {
-        System.out.println("Distributor's email cannot be null");
-        Object obj = new Distributor(TSTUUID, TSTNAME, null);
+        Object obj = new Distributor(DISTRIBUTORUUID, NAME, null);
     }
 
     /**
@@ -157,7 +147,6 @@ public class DistributorTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testDistributorEmailCannotBeEmpty() {
-        System.out.println("Distributor's email cannot be empty");
-        Object obj = new Distributor(TSTUUID, TSTNAME, "");
+        Object obj = new Distributor(DISTRIBUTORUUID, NAME, "");
     }
 }

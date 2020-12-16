@@ -1,23 +1,22 @@
 package eventsourcing;
 
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * Classe décrivant un distributeur
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.1
+ * @version 0.1.6
  *
  */
 public class Distributor {
 
-    private UUID uuid;
+    private DistributorUuid uuid;
     private String name;
     private String email;
 
-    public Distributor(UUID uuid, String name, String email) {
+    public Distributor(DistributorUuid uuid, String name, String email) {
 
         if (uuid == null) {
             throw new NullPointerException("Distributor's uuid cannot be null");
@@ -44,10 +43,10 @@ public class Distributor {
     }
 
     public Distributor(String name, String email) {
-        this(UUID.randomUUID(), name, email);
+        this(new DistributorUuid(), name, email);
     }
 
-    public UUID getUuid() {
+    public DistributorUuid getUuid() {
         return uuid;
     }
 
