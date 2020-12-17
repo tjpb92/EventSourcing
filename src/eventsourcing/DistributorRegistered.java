@@ -7,32 +7,35 @@ import java.util.UUID;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.5
+ * @version 0.1.7
  */
 public class DistributorRegistered extends DistributionInscriptionEvent {
-    
-    private Distributor distributor;
 
-    public DistributorRegistered(UUID uuid, Distributor distributor) {
+    private DistributorAbstract distributorAbstract;
+
+    public DistributorRegistered(UUID uuid, DistributorAbstract distributorAbstract) {
         super(uuid);
 
-        if (distributor == null) {
-            throw new NullPointerException("Distributor cannot be null");
+        if (distributorAbstract == null) {
+            throw new NullPointerException("Distributor abstract cannot be null");
         }
-        this.distributor = distributor;
+        this.distributorAbstract = distributorAbstract;
     }
 
-    public DistributorRegistered(Distributor distributor) {
-        this(UUID.randomUUID(), distributor);
+    public DistributorRegistered(DistributorAbstract distributorAbstract) {
+        this(UUID.randomUUID(), distributorAbstract);
     }
 
-    public Distributor getDistributor() {
-        return distributor;
+    public DistributorAbstract getDistributorAbstract() {
+        return distributorAbstract;
     }
 
     @Override
     public String toString() {
-        return "DistributorRegistered{" + "distributor=" + distributor + '}';
+        return "DistributorRegistered:{"
+                + "uuid:" + getUuid()
+                + ", " + distributorAbstract
+                + '}';
     }
-    
+
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eventsourcing;
 
 import java.util.ArrayList;
@@ -17,13 +12,15 @@ import static org.junit.Assert.*;
 /**
  *
  * @author Thierry Baribaud
+ * @author Anthony Guerot
+ * @version 0.1.7
  */
 public class DistributeurNameListTest {
     
-    private static final UUID TSTUUID = UUID.randomUUID();
-    private static final String TSTNAME = "totolito";
-    private static final String TSTEMAIL = TSTNAME + "@mail.com";
-    private static final Distributor TSTDISTRIBUTOR = new Distributor(TSTNAME, TSTEMAIL);
+    private static final UUID AGGREGATE_UUID = UUID.randomUUID();
+    private static final String NAME = "totolito";
+    private static final String EMAIL = NAME + "@mail.com";
+    private static final Distributor DISTRIBUTOR = new Distributor(NAME, EMAIL);
 
     public DistributeurNameListTest() {
     }
@@ -51,15 +48,13 @@ public class DistributeurNameListTest {
     public void testDistributeurNameListRegistered() {
         UUID uuid = null;
         DistributeurNameList instance = new DistributeurNameList();
-        ArrayList<String> names = instance.getNames(TSTUUID);
+        ArrayList<String> names = instance.getNames(AGGREGATE_UUID);
         long originalCounter = names.size();
-        System.out.println("names(avant):"+names);
         
-        DistributorRegistered distributorRegistered = new DistributorRegistered(TSTUUID, TSTDISTRIBUTOR);
+        DistributorRegistered distributorRegistered = new DistributorRegistered(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
         instance.handle(distributorRegistered);
-        names = instance.getNames(TSTUUID);    
+        names = instance.getNames(AGGREGATE_UUID);    
         long counter = names.size();
-        System.out.println("names(après):"+names);
         assertEquals(counter, originalCounter+1);
     }
 
@@ -70,21 +65,18 @@ public class DistributeurNameListTest {
     public void testDistributeurNameListUnregistered() {
         UUID uuid = null;
         DistributeurNameList instance = new DistributeurNameList();
-        ArrayList<String> names = instance.getNames(TSTUUID);
+        ArrayList<String> names = instance.getNames(AGGREGATE_UUID);
         long originalCounter = names.size();
-        System.out.println("names(avant):"+names);
         
-        DistributorRegistered distributorRegistered = new DistributorRegistered(TSTUUID, TSTDISTRIBUTOR);
+        DistributorRegistered distributorRegistered = new DistributorRegistered(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
         instance.handle(distributorRegistered);
-        names = instance.getNames(TSTUUID);    
+        names = instance.getNames(AGGREGATE_UUID);    
         long counter = names.size();
-        System.out.println("names(interm):"+names);
 
-        DistributorUnregistered distributorUnregistered = new DistributorUnregistered(TSTUUID, TSTDISTRIBUTOR);
+        DistributorUnregistered distributorUnregistered = new DistributorUnregistered(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
         instance.handle(distributorUnregistered);
-        names = instance.getNames(TSTUUID);    
+        names = instance.getNames(AGGREGATE_UUID);    
         counter = names.size();
-        System.out.println("names(après):"+names);
         assertEquals(counter, originalCounter);
     }
     

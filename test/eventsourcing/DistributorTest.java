@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  */
 public class DistributorTest {
 
-    private static final DistributorUuid DISTRIBUTORUUID = new DistributorUuid();
+    private static final DistributorUuid DISTRIBUTOR_UUID = new DistributorUuid();
     private static final String NAME = "totolito";
     private static final String EMAIL = NAME + "@mail.com";
 
@@ -44,8 +44,8 @@ public class DistributorTest {
      */
     @Test
     public void testDistributorGetUuid() {
-        Distributor instance = new Distributor(DISTRIBUTORUUID, NAME, EMAIL);
-        DistributorUuid expResult = DISTRIBUTORUUID;
+        Distributor instance = new Distributor(DISTRIBUTOR_UUID, NAME, EMAIL);
+        DistributorUuid expResult = DISTRIBUTOR_UUID;
         DistributorUuid result = instance.getUuid();
         assertEquals(expResult, result);
     }
@@ -55,7 +55,7 @@ public class DistributorTest {
      */
     @Test
     public void testDistributorGetName() {
-        Distributor instance = new Distributor(DISTRIBUTORUUID, NAME, EMAIL);
+        Distributor instance = new Distributor(DISTRIBUTOR_UUID, NAME, EMAIL);
         String expResult = NAME;
         String result = instance.getName();
         assertEquals(expResult, result);
@@ -66,7 +66,7 @@ public class DistributorTest {
      */
     @Test
     public void testDistributorGetEmail() {
-        Distributor instance = new Distributor(DISTRIBUTORUUID, NAME, EMAIL);
+        Distributor instance = new Distributor(DISTRIBUTOR_UUID, NAME, EMAIL);
         String expResult = EMAIL;
         String result = instance.getEmail();
         assertEquals(expResult, result);
@@ -77,10 +77,11 @@ public class DistributorTest {
      */
     @Test
     public void testDistributorToString() {
-        Distributor instance = new Distributor(DISTRIBUTORUUID, NAME, EMAIL);
-//        System.out.println(instance);
-        String expResult = "Distributor{uuid=" + DISTRIBUTORUUID
-                + ", name=" + NAME + ", email=" + EMAIL + "}";
+        Distributor instance = new Distributor(DISTRIBUTOR_UUID, NAME, EMAIL);
+//        System.out.println(instance.toString());
+        String expResult = "Distributor:{uuid:" + DISTRIBUTOR_UUID
+                + ", name:" + NAME + ", email:" + EMAIL + "}";
+//        System.out.println(expResult);
         String result = instance.toString();
         assertEquals(expResult, result);
     }
@@ -103,8 +104,8 @@ public class DistributorTest {
      */
     @Test
     public void testDistributorEquals() {
-        Object obj = new Distributor(DISTRIBUTORUUID, NAME, EMAIL);
-        Distributor instance = new Distributor(DISTRIBUTORUUID, NAME, EMAIL);
+        Object obj = new Distributor(DISTRIBUTOR_UUID, NAME, EMAIL);
+        Distributor instance = new Distributor(DISTRIBUTOR_UUID, NAME, EMAIL);
         boolean expResult = true;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
@@ -123,7 +124,7 @@ public class DistributorTest {
      */
     @Test(expected = NullPointerException.class)
     public void testDistributorNameCannotBeNull() {
-        Object obj = new Distributor(DISTRIBUTORUUID, null, EMAIL);
+        Object obj = new Distributor(DISTRIBUTOR_UUID, null, EMAIL);
     }
 
     /**
@@ -131,7 +132,7 @@ public class DistributorTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testDistributorNameCannotBeEmpty() {
-        Object obj = new Distributor(DISTRIBUTORUUID, "", EMAIL);
+        Object obj = new Distributor(DISTRIBUTOR_UUID, "", EMAIL);
     }
 
     /**
@@ -139,7 +140,7 @@ public class DistributorTest {
      */
     @Test(expected = NullPointerException.class)
     public void testDistributorEmailCannotBeNull() {
-        Object obj = new Distributor(DISTRIBUTORUUID, NAME, null);
+        Object obj = new Distributor(DISTRIBUTOR_UUID, NAME, null);
     }
 
     /**
@@ -147,6 +148,6 @@ public class DistributorTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testDistributorEmailCannotBeEmpty() {
-        Object obj = new Distributor(DISTRIBUTORUUID, NAME, "");
+        Object obj = new Distributor(DISTRIBUTOR_UUID, NAME, "");
     }
 }

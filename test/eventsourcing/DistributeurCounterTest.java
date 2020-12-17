@@ -12,30 +12,30 @@ import static org.junit.Assert.*;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.5
+ * @version 0.1.7
  */
 public class DistributeurCounterTest {
-    
-    private static final UUID TSTUUID = UUID.randomUUID();
-    private static final String TSTNAME = "totolito";
-    private static final String TSTEMAIL = TSTNAME + "@mail.com";
-    private static final Distributor TSTDISTRIBUTOR = new Distributor(TSTNAME, TSTEMAIL);
-    
+
+    private static final UUID AGGREGATE_UUID = UUID.randomUUID();
+    private static final String NAME = "totolito";
+    private static final String EMAIL = NAME + "@mail.com";
+    private static final Distributor DISTRIBUTOR = new Distributor(NAME, EMAIL);
+
     public DistributeurCounterTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -46,16 +46,15 @@ public class DistributeurCounterTest {
     @Test
     public void testCounterIncremented() {
         DistributeurCounter instance = new DistributeurCounter();
-        long originalCounter = instance.getCounters(TSTUUID);
-        
-        DistributorRegistered distributorRegistered = new DistributorRegistered(TSTUUID, TSTDISTRIBUTOR);
+        long originalCounter = instance.getCounters(AGGREGATE_UUID);
+
+        DistributorRegistered distributorRegistered = new DistributorRegistered(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
         instance.handle(distributorRegistered);
-        
+
         long expResult = originalCounter + 1;
-        long result = instance.getCounters(TSTUUID);
+        long result = instance.getCounters(AGGREGATE_UUID);
         assertEquals(expResult, result);
     }
-
 
     /**
      * Test of getCounter method, of class DistributeurCounter.
@@ -64,15 +63,15 @@ public class DistributeurCounterTest {
     public void testCounterDecremented() {
         DistributeurCounter instance = new DistributeurCounter();
 
-        long originalCounter = instance.getCounters(TSTUUID);
+        long originalCounter = instance.getCounters(AGGREGATE_UUID);
 //        System.out.println("originalCounter:"+originalCounter+", UUID:"+TSTUUID);
-        
-        DistributorUnregistered distributorUnregistered = new DistributorUnregistered(TSTUUID, TSTDISTRIBUTOR);
+
+        DistributorUnregistered distributorUnregistered = new DistributorUnregistered(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
         instance.handle(distributorUnregistered);
-        
+
         long expResult = originalCounter - 1;
-        long result = instance.getCounters(TSTUUID);
+        long result = instance.getCounters(AGGREGATE_UUID);
         assertEquals(expResult, result);
     }
-    
+
 }

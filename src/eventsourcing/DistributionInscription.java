@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.4
+ * @version 0.1.7
  */
 public class DistributionInscription {
 
@@ -54,7 +54,7 @@ public class DistributionInscription {
         return inscriptionStarted;
     }
 
-    public DistributorRegistered registerDistributor(UUID uuid, Distributor distributor) {
+    public DistributorRegistered registerDistributor(UUID uuid, DistributorAbstract distributorAbstract) {
         DistributorRegistered distributorRegistered = null;
         int nbRegistered = 0;
         boolean started = false;
@@ -65,22 +65,22 @@ public class DistributionInscription {
             }
             if (event instanceof DistributorRegistered) {
                 DistributorRegistered dr = (DistributorRegistered) event;
-                if (dr.getDistributor().equals(distributor)) nbRegistered++;
+                if (dr.getDistributorAbstract().equals(distributorAbstract)) nbRegistered++;
             }
             if (event instanceof DistributorUnregistered) {
                 DistributorUnregistered du = (DistributorUnregistered) event;
-                if (du.getDistributor().equals(distributor)) nbRegistered--;
+                if (du.getDistributorAbstract().equals(distributorAbstract)) nbRegistered--;
             }
         }
         if (started && nbRegistered == 0) {
-            distributorRegistered = new DistributorRegistered(uuid, distributor);
+            distributorRegistered = new DistributorRegistered(uuid, distributorAbstract);
             events.add(distributorRegistered);
         }
          
         return distributorRegistered;
     }
 
-    public DistributorUnregistered unregisterDistributor(UUID uuid, Distributor distributor) {
+    public DistributorUnregistered unregisterDistributor(UUID uuid, DistributorAbstract distributorAbstract) {
         DistributorUnregistered distributorUnregistered = null;
         int nbRegistered = 0;
         boolean started = false;
@@ -91,15 +91,15 @@ public class DistributionInscription {
             }
             if (event instanceof DistributorRegistered) {
                 DistributorRegistered dr = (DistributorRegistered) event;
-                if (dr.getDistributor().equals(distributor)) nbRegistered++;
+                if (dr.getDistributorAbstract().equals(distributorAbstract)) nbRegistered++;
             }
             if (event instanceof DistributorUnregistered) {
                 DistributorUnregistered du = (DistributorUnregistered) event;
-                if (du.getDistributor().equals(distributor)) nbRegistered--;
+                if (du.getDistributorAbstract().equals(distributorAbstract)) nbRegistered--;
             }
         }
         if (started && nbRegistered == 0) {
-            distributorUnregistered = new DistributorUnregistered(uuid, distributor);
+            distributorUnregistered = new DistributorUnregistered(uuid, distributorAbstract);
             events.add(distributorUnregistered);
         }
         

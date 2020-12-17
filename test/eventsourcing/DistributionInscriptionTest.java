@@ -13,14 +13,14 @@ import static org.junit.Assert.*;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.4
+ * @version 0.1.7
  */
 public class DistributionInscriptionTest {
 
-    private static final UUID TSTUUID = UUID.randomUUID();
-    private static final String TSTNAME = "totolito";
-    private static final String TSTEMAIL = TSTNAME + "@mail.com";
-    private static final Distributor TSTDISTRIBUTOR = new Distributor(TSTNAME, TSTEMAIL);
+    private static final UUID AGGREGATE_UUID = UUID.randomUUID();
+    private static final String NAME = "totolito";
+    private static final String EMAIL = NAME + "@mail.com";
+    private static final Distributor DISTRIBUTOR = new Distributor(NAME, EMAIL);
 
     public DistributionInscriptionTest() {
     }
@@ -46,7 +46,6 @@ public class DistributionInscriptionTest {
      */
     @Test(expected = NullPointerException.class)
     public void testDistributionInscriptionUuidCannotBeNull() {
-        System.out.println("DistributionInscription's uuid cannot be null");
         Object obj = new DistributionInscription(null);
     }
 
@@ -55,15 +54,11 @@ public class DistributionInscriptionTest {
      */
     @Test
     public void testInscriptionStarted() {
-        System.out.println("inscriptionStarted");
 
-        InscriptionStarted expectedResult = new InscriptionStarted(TSTUUID);
-        System.out.println("expectedResult:" + expectedResult);
+        InscriptionStarted expectedResult = new InscriptionStarted(AGGREGATE_UUID);
 
-        DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
-        InscriptionStarted result = distributionInscription.startInscription(TSTUUID);
-        System.out.println("result:" + result);
-        System.out.println("distributionInscription:" + distributionInscription);
+        DistributionInscription distributionInscription = new DistributionInscription(AGGREGATE_UUID);
+        InscriptionStarted result = distributionInscription.startInscription(AGGREGATE_UUID);
 
         assertEquals(expectedResult, result);
     }
@@ -73,12 +68,11 @@ public class DistributionInscriptionTest {
      */
     @Test
     public void testCannotPerformTwoStartInscriptionCommand() {
-        System.out.println("cannotPerformTwoStartInscriptionCommand");
 
-        DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
-        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(TSTUUID);
+        DistributionInscription distributionInscription = new DistributionInscription(AGGREGATE_UUID);
+        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(AGGREGATE_UUID);
 
-        InscriptionStarted nextInscriptionStarted = distributionInscription.startInscription(TSTUUID);
+        InscriptionStarted nextInscriptionStarted = distributionInscription.startInscription(AGGREGATE_UUID);
 
         assertNotNull(firstInscriptionStarted);
         assertNull(nextInscriptionStarted);
@@ -90,13 +84,13 @@ public class DistributionInscriptionTest {
      */
     @Test
     public void testCannotPerformTwoRegisterDistributorCommand() {
-        System.out.println("cannotPerformTwoRegisterDistributorCommand");
 
-        DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
-        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(TSTUUID);
-        DistributorRegistered firstDistributorRegistered = distributionInscription.registerDistributor(TSTUUID, TSTDISTRIBUTOR);
+        DistributionInscription distributionInscription = new DistributionInscription(AGGREGATE_UUID);
+        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(AGGREGATE_UUID);
+        DistributorAbstract distributorAbstract = new DistributorAbstract(DISTRIBUTOR);
+        DistributorRegistered firstDistributorRegistered = distributionInscription.registerDistributor(AGGREGATE_UUID, distributorAbstract);
 
-        DistributorRegistered nextDistributorRegistered = distributionInscription.registerDistributor(TSTUUID, TSTDISTRIBUTOR);
+        DistributorRegistered nextDistributorRegistered = distributionInscription.registerDistributor(AGGREGATE_UUID, distributorAbstract);
 
         assertNotNull("Event should be not null", firstDistributorRegistered);
         assertNull("Event should be null", nextDistributorRegistered);
@@ -108,14 +102,14 @@ public class DistributionInscriptionTest {
      */
     @Test
     public void testCannotPerformTwoUnregisterDistributorCommand() {
-        System.out.println("cannotPerformTwoUnregisterDistributorCommand");
 
-        DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
-        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(TSTUUID);
+        DistributionInscription distributionInscription = new DistributionInscription(AGGREGATE_UUID);
+        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(AGGREGATE_UUID);
+        DistributorAbstract distributorAbstract = new DistributorAbstract(DISTRIBUTOR);
         
-        DistributorUnregistered firstDistributorUnregistered = distributionInscription.unregisterDistributor(TSTUUID, TSTDISTRIBUTOR);
+        DistributorUnregistered firstDistributorUnregistered = distributionInscription.unregisterDistributor(AGGREGATE_UUID, distributorAbstract);
 
-        DistributorUnregistered nextDistributorUnregistered = distributionInscription.unregisterDistributor(TSTUUID, TSTDISTRIBUTOR);
+        DistributorUnregistered nextDistributorUnregistered = distributionInscription.unregisterDistributor(AGGREGATE_UUID, distributorAbstract);
 
         assertNotNull("Event should be not null", firstDistributorUnregistered);
         assertNull("Event should be null", nextDistributorUnregistered);
@@ -126,13 +120,12 @@ public class DistributionInscriptionTest {
      */
     @Test
     public void testDistributorRegistered() {
-        System.out.println("distributorRegistered");
 
-        DistributorRegistered expectedResult = new DistributorRegistered(TSTUUID, TSTDISTRIBUTOR);
+        DistributorRegistered expectedResult = new DistributorRegistered(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
         
-        DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
-        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(TSTUUID);
-        DistributorRegistered result = distributionInscription.registerDistributor(TSTUUID, TSTDISTRIBUTOR);
+        DistributionInscription distributionInscription = new DistributionInscription(AGGREGATE_UUID);
+        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(AGGREGATE_UUID);
+        DistributorRegistered result = distributionInscription.registerDistributor(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
 
         assertEquals(expectedResult, result);
     }
@@ -142,10 +135,9 @@ public class DistributionInscriptionTest {
      */
     @Test
     public void testCannotRegisterDistributorIfInscriptionNtStarted() {
-        System.out.println("cannotRegisterDistributorIfInscriptionNtStarted");
 
-        DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
-        DistributorRegistered result = distributionInscription.registerDistributor(TSTUUID, TSTDISTRIBUTOR);
+        DistributionInscription distributionInscription = new DistributionInscription(AGGREGATE_UUID);
+        DistributorRegistered result = distributionInscription.registerDistributor(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
         assertNull("Event should be null", result);
     }
 
@@ -154,13 +146,12 @@ public class DistributionInscriptionTest {
      */
     @Test
     public void testDistributorUnregistered() {
-        System.out.println("distributorUnregistered");
 
-        DistributorUnregistered expectedResult = new DistributorUnregistered(TSTUUID, TSTDISTRIBUTOR);
+        DistributorUnregistered expectedResult = new DistributorUnregistered(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
 
-        DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
-        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(TSTUUID);
-        DistributorUnregistered result = distributionInscription.unregisterDistributor(TSTUUID, TSTDISTRIBUTOR);
+        DistributionInscription distributionInscription = new DistributionInscription(AGGREGATE_UUID);
+        InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(AGGREGATE_UUID);
+        DistributorUnregistered result = distributionInscription.unregisterDistributor(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
 
         assertEquals(expectedResult, result);
     }

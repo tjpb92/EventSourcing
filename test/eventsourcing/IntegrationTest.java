@@ -13,14 +13,14 @@ import static org.junit.Assert.*;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.5
+ * @version 0.1.7
  */
 public class IntegrationTest {
 
-    private static final UUID TSTUUID = UUID.randomUUID();
-    private static final String TSTNAME = "totolito";
-    private static final String TSTEMAIL = TSTNAME + "@mail.com";
-    private static final Distributor TSTDISTRIBUTOR = new Distributor(TSTNAME, TSTEMAIL);
+    private static final UUID AGGREGATE_UUID = UUID.randomUUID();
+    private static final String NAME = "totolito";
+    private static final String EMAIL = NAME + "@mail.com";
+    private static final Distributor DISTRIBUTOR = new Distributor(NAME, EMAIL);
 
     public IntegrationTest() {
     }
@@ -50,15 +50,16 @@ public class IntegrationTest {
         EventBus eventBus = new EventBus(eventStore);
         ArrayList<Event> events = new ArrayList<>();
 
-        DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
+        DistributionInscription distributionInscription = new DistributionInscription(AGGREGATE_UUID);
 
-        Event inscriptionStarted = distributionInscription.startInscription(TSTUUID);
+        Event inscriptionStarted = distributionInscription.startInscription(AGGREGATE_UUID);
         events.add(inscriptionStarted);
 
         class TestEventHandler implements IEventHandler {
 
             public boolean called = false;
 
+            @Override
             public void handle(Event event) {
                 this.called = true;
             }
@@ -80,10 +81,10 @@ public class IntegrationTest {
         ArrayList<Event> eventStore = new ArrayList<>();
         EventBus eventBus = new EventBus(eventStore);
         ArrayList<Event> events = new ArrayList<>();
-        
-        DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
 
-        Event inscriptionStarted = distributionInscription.startInscription(TSTUUID);
+        DistributionInscription distributionInscription = new DistributionInscription(AGGREGATE_UUID);
+
+        Event inscriptionStarted = distributionInscription.startInscription(AGGREGATE_UUID);
         events.add(inscriptionStarted);
 
         class TestEventHandler implements IEventHandler {
@@ -119,13 +120,13 @@ public class IntegrationTest {
         eventBus.subscribe(distributeurNameList);
 
         // When
-        DistributionInscription distributionInscription = new DistributionInscription(TSTUUID);
+        DistributionInscription distributionInscription = new DistributionInscription(AGGREGATE_UUID);
 
-        Event inscriptionStarted = distributionInscription.startInscription(TSTUUID);
+        Event inscriptionStarted = distributionInscription.startInscription(AGGREGATE_UUID);
 //        eventBus.publish(inscriptionStarted);
         events.add(inscriptionStarted);
 
-        Event distributorRegistered = distributionInscription.registerDistributor(TSTUUID, TSTDISTRIBUTOR);
+        Event distributorRegistered = distributionInscription.registerDistributor(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
 //        eventBus.publish(distributorRegistered);
         events.add(distributorRegistered);
         eventBus.publish(events);
@@ -134,8 +135,8 @@ public class IntegrationTest {
         System.out.println("eventStore:" + eventStore);
 
 //        assertEquals(testReadModel.called,2);
-        assertEquals(distributeurCounter.getCounters(TSTUUID), 1);
-        assertEquals(distributeurNameList.getNames(TSTUUID).size(), 1);
+        assertEquals(distributeurCounter.getCounters(AGGREGATE_UUID), 1);
+        assertEquals(distributeurNameList.getNames(AGGREGATE_UUID).size(), 1);
     }
 
 }

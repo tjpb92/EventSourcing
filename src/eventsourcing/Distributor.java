@@ -7,7 +7,7 @@ import java.util.Objects;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.6
+ * @version 0.1.7
  *
  */
 public class Distributor {
@@ -57,10 +57,18 @@ public class Distributor {
     public String getEmail() {
         return email;
     }
+    
+    public DistributorAbstract getAbstract() {
+        return new DistributorAbstract(this);
+    }
 
     @Override
     public String toString() {
-        return "Distributor{" + "uuid=" + uuid + ", name=" + name + ", email=" + email + '}';
+        return "Distributor:{" + 
+                "uuid:" + uuid + 
+                ", name:" + name + 
+                ", email:" + email + 
+                '}';
     }
 
     @Override
