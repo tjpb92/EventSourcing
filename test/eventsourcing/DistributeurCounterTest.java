@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.7
+ * @version 0.1.8
  */
 public class DistributeurCounterTest {
 
@@ -48,7 +48,7 @@ public class DistributeurCounterTest {
         DistributeurCounter instance = new DistributeurCounter();
         long originalCounter = instance.getCounters(AGGREGATE_UUID);
 
-        DistributorRegistered distributorRegistered = new DistributorRegistered(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
+        DistributorRegistered distributorRegistered = new DistributorRegistered(AGGREGATE_UUID, 0, new DistributorAbstract(DISTRIBUTOR));
         instance.handle(distributorRegistered);
 
         long expResult = originalCounter + 1;
@@ -66,7 +66,7 @@ public class DistributeurCounterTest {
         long originalCounter = instance.getCounters(AGGREGATE_UUID);
 //        System.out.println("originalCounter:"+originalCounter+", UUID:"+TSTUUID);
 
-        DistributorUnregistered distributorUnregistered = new DistributorUnregistered(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
+        DistributorUnregistered distributorUnregistered = new DistributorUnregistered(AGGREGATE_UUID, 0, new DistributorAbstract(DISTRIBUTOR));
         instance.handle(distributorUnregistered);
 
         long expResult = originalCounter - 1;

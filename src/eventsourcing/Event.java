@@ -13,24 +13,30 @@ import java.util.UUID;
 public abstract class Event {
     
     private UUID uuid;
+    private long version;
     
     // TODO
     // private UUID aggregateUuid;
 
-    public Event(UUID uuid) {
+    public Event(UUID uuid, long version) {
         if (uuid == null) {
             throw new NullPointerException("Events's uuid cannot be null");
         }
         
         this.uuid = uuid;
+        this.version = version;
     }
 
     public Event() {
-        this(UUID.randomUUID());
+        this(UUID.randomUUID(), 0);
     }
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public long getVersion() {
+        return version;
     }
 
     @Override
@@ -50,6 +56,9 @@ public abstract class Event {
         }
         final Event other = (Event) obj;
         if (!Objects.equals(this.uuid, other.uuid)) {
+            return false;
+        }
+        if (!Objects.equals(this.version, other.version)) {
             return false;
         }
         return true;

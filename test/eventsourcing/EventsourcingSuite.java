@@ -12,13 +12,13 @@ import org.junit.runners.Suite;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.7
+ * @version 0.1.8
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({DistributionInscriptionTest.class,
     DistributorTest.class, DistributeurCounterTest.class,
     DistributeurNameListTest.class, DistributorUuidTest.class, 
-    EventBusTest.class, 
+    EventBusTest.class, IEventStoreTest.class,
     IntegrationTest.class})
 public class EventsourcingSuite {
 

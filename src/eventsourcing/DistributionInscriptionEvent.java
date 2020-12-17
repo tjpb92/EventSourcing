@@ -8,12 +8,12 @@ import java.util.UUID;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.1
+ * @version 0.1.8
  */
 public abstract class DistributionInscriptionEvent extends Event {
 
-    public DistributionInscriptionEvent(UUID uuid) {
-        super(uuid);
+    public DistributionInscriptionEvent(UUID uuid, long version) {
+        super(uuid, version);
     }
 
     public DistributionInscriptionEvent() {

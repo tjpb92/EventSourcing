@@ -7,16 +7,20 @@ import java.util.UUID;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.2
+ * @version 0.1.8
  */
 public class InscriptionStarted extends DistributionInscriptionEvent {
     
+    public InscriptionStarted(UUID uuid, long version) {
+        super(uuid, version);
+    }
+
     public InscriptionStarted(UUID uuid) {
-        super(uuid);
+        super(uuid, 0);
     }
 
     public InscriptionStarted() {
-        this(UUID.randomUUID());
+        this(UUID.randomUUID(), 0);
     }
 
     @Override

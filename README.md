@@ -50,6 +50,11 @@ Le publisher doit :
 - appeler les handlers adéquats pour chaque événement,
 - doit afficher les projections lorsqu'une commande est invoquée.
 
+## Quatrième jour de la formation : 17/12/2020
+
+- Implémentation d'une réprésention de l'EventStore
+- Contrôle du versionning des événements
+
 ## Références:
 
 - [Implémenter DDD avec CQRS / Event Sourcing](https://formation.hackyourjob.com/catalogue/ddd-cqrs-eventsourcing.html)

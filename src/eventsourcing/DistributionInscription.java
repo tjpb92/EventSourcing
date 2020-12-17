@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.7
+ * @version 0.1.8
  */
 public class DistributionInscription {
 
@@ -73,7 +73,7 @@ public class DistributionInscription {
             }
         }
         if (started && nbRegistered == 0) {
-            distributorRegistered = new DistributorRegistered(uuid, distributorAbstract);
+            distributorRegistered = new DistributorRegistered(uuid, this.events.size(), distributorAbstract);
             events.add(distributorRegistered);
         }
          
@@ -99,7 +99,7 @@ public class DistributionInscription {
             }
         }
         if (started && nbRegistered == 0) {
-            distributorUnregistered = new DistributorUnregistered(uuid, distributorAbstract);
+            distributorUnregistered = new DistributorUnregistered(uuid, this.events.size(), distributorAbstract);
             events.add(distributorUnregistered);
         }
         

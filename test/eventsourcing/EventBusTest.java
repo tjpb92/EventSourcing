@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.7
+ * @version 0.1.8
  */
 public class EventBusTest {
 
@@ -46,7 +46,7 @@ public class EventBusTest {
      */
     @Test
     public void testStoreEventOnPublish() {
-        DistributorRegistered distributorRegistered = new DistributorRegistered(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
+        DistributorRegistered distributorRegistered = new DistributorRegistered(AGGREGATE_UUID, 0, new DistributorAbstract(DISTRIBUTOR));
         ArrayList<Event> eventStore = new ArrayList<>();
         ArrayList<Event> events = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public class EventBusTest {
     @Test
     public void testHandlerCalledOnPublish() {
         ArrayList<Event> events = new ArrayList<>();
-        DistributorRegistered distributorRegistered = new DistributorRegistered(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
+        DistributorRegistered distributorRegistered = new DistributorRegistered(AGGREGATE_UUID, 0, new DistributorAbstract(DISTRIBUTOR));
         events.add(distributorRegistered);
         ArrayList<Event> eventStore = new ArrayList<>();
 
