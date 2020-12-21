@@ -1,7 +1,9 @@
 package eventsourcing;
 
+import static eventsourcing.JeuxDEssais.AGGREGATE_UUID;
+import static eventsourcing.JeuxDEssais.AGGREGATE_UUID2;
+import static eventsourcing.JeuxDEssais.DISTRIBUTOR;
 import java.util.ArrayList;
-import java.util.UUID;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,16 +15,10 @@ import static org.junit.Assert.*;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.9
+ * @version 0.1.10
  */
 public class IEventStoreTest {
     
-    private static final UUID AGGREGATE_UUID = UUID.randomUUID();
-    private static final UUID AGGREGATE_UUID2 = UUID.randomUUID();
-    private static final String NAME = "totolito";
-    private static final String EMAIL = NAME + "@mail.com";
-    private static final Distributor DISTRIBUTOR = new Distributor(NAME, EMAIL);
-
     public IEventStoreTest() {
     }
     

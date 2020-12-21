@@ -1,5 +1,8 @@
 package eventsourcing;
 
+import static eventsourcing.JeuxDEssais.DISTRIBUTOR_UUID;
+import static eventsourcing.JeuxDEssais.EMAIL;
+import static eventsourcing.JeuxDEssais.NAME;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -12,13 +15,9 @@ import static org.junit.Assert.*;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.6
+ * @version 0.1.10
  */
 public class DistributorTest {
-
-    private static final DistributorUuid DISTRIBUTOR_UUID = new DistributorUuid();
-    private static final String NAME = "totolito";
-    private static final String EMAIL = NAME + "@mail.com";
 
     public DistributorTest() {
     }
