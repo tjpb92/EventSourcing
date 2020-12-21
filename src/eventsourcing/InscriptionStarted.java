@@ -7,10 +7,10 @@ import java.util.UUID;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.8
+ * @version 0.1.9
  */
-public class InscriptionStarted extends DistributionInscriptionEvent {
-    
+public class InscriptionStarted extends Event {
+
     public InscriptionStarted(UUID uuid, long version) {
         super(uuid, version);
     }
@@ -25,7 +25,9 @@ public class InscriptionStarted extends DistributionInscriptionEvent {
 
     @Override
     public String toString() {
-        return "InscriptionStarted{" + '}';
+        return "InscriptionStarted{"
+                + "aggregateUuid:" + getAggregateUuid()
+                + '}';
     }
 
 }

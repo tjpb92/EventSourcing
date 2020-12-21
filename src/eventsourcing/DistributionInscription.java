@@ -11,50 +11,50 @@ import java.util.stream.Collectors;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.8
+ * @version 0.1.9
  */
 public class DistributionInscription {
 
-    private UUID uuid;
-    private ArrayList<DistributionInscriptionEvent> events;
+    private UUID aggregateUuid;
+    private ArrayList<Event> events;
 
-    public DistributionInscription(UUID uuid, ArrayList<DistributionInscriptionEvent> events) {
-        if (uuid == null) {
+    public DistributionInscription(UUID aggregateUuid, ArrayList<Event> events) {
+        if (aggregateUuid == null) {
             throw new NullPointerException("DistributionInscription's uuid cannot be null");
         }
 
-        this.uuid = uuid;
+        this.aggregateUuid = aggregateUuid;
         this.events = events;
     }
 
-    public DistributionInscription(UUID uuid) {
-        this(uuid, new ArrayList<>());
+    public DistributionInscription(UUID aggregateUuid) {
+        this(aggregateUuid, new ArrayList<>());
     }
 
     public DistributionInscription() {
         this(UUID.randomUUID());
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public UUID getAggregateUuid() {
+        return aggregateUuid;
     }
 
-    public InscriptionStarted startInscription(UUID uuid) {
+    public InscriptionStarted startInscription(UUID aggregateUuid) {
         InscriptionStarted inscriptionStarted = null;
-        List<DistributionInscriptionEvent> inscriptionStartedList = events
+        List<Event> inscriptionStartedList = events
                 .stream()
                 .filter(InscriptionStarted.class::isInstance)
                 .collect(Collectors.toList());
 
         if (inscriptionStartedList.isEmpty()) {
-            inscriptionStarted = new InscriptionStarted(uuid);
+            inscriptionStarted = new InscriptionStarted(aggregateUuid);
             events.add(inscriptionStarted);
         }
         
         return inscriptionStarted;
     }
 
-    public DistributorRegistered registerDistributor(UUID uuid, DistributorAbstract distributorAbstract) {
+    public DistributorRegistered registerDistributor(UUID aggregateUuiduuid, DistributorAbstract distributorAbstract) {
         DistributorRegistered distributorRegistered = null;
         int nbRegistered = 0;
         boolean started = false;
@@ -73,14 +73,14 @@ public class DistributionInscription {
             }
         }
         if (started && nbRegistered == 0) {
-            distributorRegistered = new DistributorRegistered(uuid, this.events.size(), distributorAbstract);
+            distributorRegistered = new DistributorRegistered(aggregateUuiduuid, this.events.size(), distributorAbstract);
             events.add(distributorRegistered);
         }
          
         return distributorRegistered;
     }
 
-    public DistributorUnregistered unregisterDistributor(UUID uuid, DistributorAbstract distributorAbstract) {
+    public DistributorUnregistered unregisterDistributor(UUID aggregateUuiduuid, DistributorAbstract distributorAbstract) {
         DistributorUnregistered distributorUnregistered = null;
         int nbRegistered = 0;
         boolean started = false;
@@ -99,7 +99,7 @@ public class DistributionInscription {
             }
         }
         if (started && nbRegistered == 0) {
-            distributorUnregistered = new DistributorUnregistered(uuid, this.events.size(), distributorAbstract);
+            distributorUnregistered = new DistributorUnregistered(aggregateUuiduuid, this.events.size(), distributorAbstract);
             events.add(distributorUnregistered);
         }
         
@@ -109,7 +109,7 @@ public class DistributionInscription {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 61 * hash + Objects.hashCode(this.uuid);
+        hash = 61 * hash + Objects.hashCode(this.aggregateUuid);
         return hash;
     }
 
@@ -122,7 +122,7 @@ public class DistributionInscription {
             return false;
         }
         final DistributionInscription other = (DistributionInscription) obj;
-        if (!Objects.equals(this.uuid, other.uuid)) {
+        if (!Objects.equals(this.aggregateUuid, other.aggregateUuid)) {
             return false;
         }
         return true;
@@ -130,6 +130,6 @@ public class DistributionInscription {
 
     @Override
     public String toString() {
-        return "DistributionInscription{" + "uuid=" + uuid + ", events=" + events + '}';
+        return "DistributionInscription{" + "aggregateUuid=" + aggregateUuid + ", events=" + events + '}';
     }
 }

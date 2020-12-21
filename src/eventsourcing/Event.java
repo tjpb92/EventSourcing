@@ -8,22 +8,19 @@ import java.util.UUID;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.2
+ * @version 0.1.9
  */
 public abstract class Event {
     
-    private UUID uuid;
+    private UUID aggregateUuid;
     private long version;
     
-    // TODO
-    // private UUID aggregateUuid;
-
     public Event(UUID uuid, long version) {
         if (uuid == null) {
             throw new NullPointerException("Events's uuid cannot be null");
         }
         
-        this.uuid = uuid;
+        this.aggregateUuid = uuid;
         this.version = version;
     }
 
@@ -31,8 +28,8 @@ public abstract class Event {
         this(UUID.randomUUID(), 0);
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public UUID getAggregateUuid() {
+        return aggregateUuid;
     }
 
     public long getVersion() {
@@ -42,7 +39,7 @@ public abstract class Event {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 13 * hash + Objects.hashCode(this.uuid);
+        hash = 13 * hash + Objects.hashCode(this.aggregateUuid);
         return hash;
     }
 
@@ -55,7 +52,7 @@ public abstract class Event {
             return false;
         }
         final Event other = (Event) obj;
-        if (!Objects.equals(this.uuid, other.uuid)) {
+        if (!Objects.equals(this.aggregateUuid, other.aggregateUuid)) {
             return false;
         }
         if (!Objects.equals(this.version, other.version)) {

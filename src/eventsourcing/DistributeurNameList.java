@@ -8,24 +8,24 @@ import java.util.UUID;
  * Projection donnant les noms des distributeurs inscrits
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.7
+ * @version 0.1.9
  */
 public class DistributeurNameList implements IEventHandler {
 
-    private HashMap<UUID, ArrayList<String>> nameList = new HashMap<>();
+    private final HashMap<UUID, ArrayList<String>> nameList = new HashMap<>();
 
     @Override
     public void handle(Event event) {
         ArrayList<String> names;
 
         if (event instanceof DistributorRegistered) {
-            names = this.getNames(event.getUuid());
+            names = this.getNames(event.getAggregateUuid());
             names.add(((DistributorRegistered)event).getDistributorAbstract().getName());
-            nameList.put(event.getUuid(), names);
+            nameList.put(event.getAggregateUuid(), names);
         } else if (event instanceof DistributorUnregistered) {
-            names = this.getNames(event.getUuid());
+            names = this.getNames(event.getAggregateUuid());
             names.remove(((DistributorUnregistered)event).getDistributorAbstract().getName());
-            nameList.put(event.getUuid(), names);
+            nameList.put(event.getAggregateUuid(), names);
         }        
     }
 

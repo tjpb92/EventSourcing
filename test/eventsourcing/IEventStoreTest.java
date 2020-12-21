@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.8
+ * @version 0.1.9
  */
 public class IEventStoreTest {
     
@@ -65,7 +65,7 @@ public class IEventStoreTest {
         
         assertEquals(events, resultEvents);
         for(Event event:resultEvents) {
-            assertEquals(AGGREGATE_UUID, event.getUuid());
+            assertEquals(AGGREGATE_UUID, event.getAggregateUuid());
         }
     
     }
@@ -88,7 +88,7 @@ public class IEventStoreTest {
         
         assertEquals(events, resultEvents);
         for(Event event:resultEvents) {
-            assertEquals(AGGREGATE_UUID, event.getUuid());
+            assertEquals(AGGREGATE_UUID, event.getAggregateUuid());
         }
     
     }

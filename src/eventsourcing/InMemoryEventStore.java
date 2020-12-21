@@ -8,7 +8,7 @@ import java.util.UUID;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.8
+ * @version 0.1.9
  */
 public class InMemoryEventStore implements IEventStore {
     
@@ -22,12 +22,12 @@ public class InMemoryEventStore implements IEventStore {
             ArrayList<Event> alreadyExitingEvents;
             
             for (Event event:events) {
-                alreadyExitingEvents = this.get(event.getUuid());
+                alreadyExitingEvents = this.get(event.getAggregateUuid());
                 if ((alreadyExitingEvents.size()+1) != event.getVersion()) {
                     throw new IllegalArgumentException("Bad version for " + event);
                 }
                 alreadyExitingEvents.add(event);
-                this.eventStore.put(event.getUuid(), alreadyExitingEvents);
+                this.eventStore.put(event.getAggregateUuid(), alreadyExitingEvents);
             }
         }
     

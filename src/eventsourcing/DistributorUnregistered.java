@@ -7,9 +7,9 @@ import java.util.UUID;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.8
+ * @version 0.1.9
  */
-public class DistributorUnregistered extends DistributionInscriptionEvent {
+public class DistributorUnregistered extends Event {
     
     private DistributorAbstract distributorAbstract;
 
@@ -33,7 +33,7 @@ public class DistributorUnregistered extends DistributionInscriptionEvent {
     @Override
     public String toString() {
         return "DistributorUnregistered:{"
-                + "uuid:" + getUuid()
+                + "aggregateUuid:" + getAggregateUuid()
                 + ", " + distributorAbstract
                 + '}';
     }
