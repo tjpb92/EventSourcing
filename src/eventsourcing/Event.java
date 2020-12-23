@@ -1,21 +1,20 @@
 package eventsourcing;
 
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * Classe définissant un événement générique
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.9
+ * @version 0.1.12
  */
 public abstract class Event {
     
-    private UUID aggregateUuid;
+    private DistributionInscriptionUuid aggregateUuid;
     private long version;
     
-    public Event(UUID uuid, long version) {
+    public Event(DistributionInscriptionUuid uuid, long version) {
         if (uuid == null) {
             throw new NullPointerException("Events's uuid cannot be null");
         }
@@ -25,10 +24,10 @@ public abstract class Event {
     }
 
     public Event() {
-        this(UUID.randomUUID(), 0);
+        this(DistributionInscriptionUuid.randomUUID(), 0);
     }
 
-    public UUID getAggregateUuid() {
+    public DistributionInscriptionUuid getAggregateUuid() {
         return aggregateUuid;
     }
 

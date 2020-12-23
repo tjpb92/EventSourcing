@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.10
+ * @version 0.1.12
  */
 public class IntegrationTest {
 
@@ -128,7 +128,7 @@ public class IntegrationTest {
         eventBus.publish(events);
 
         // Then
-        System.out.println("eventStore:" + eventStore);
+//        System.out.println("eventStore:" + eventStore);
 
 //        assertEquals(testReadModel.called,2);
         assertEquals(distributeurCounter.getCounters(AGGREGATE_UUID), 1);

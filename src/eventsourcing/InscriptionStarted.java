@@ -1,26 +1,24 @@
 package eventsourcing;
 
-import java.util.UUID;
-
 /**
  * Classe définissant l'événement de démarrage d'une inscription
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.9
+ * @version 0.1.12
  */
 public class InscriptionStarted extends Event {
 
-    public InscriptionStarted(UUID uuid, long version) {
-        super(uuid, version);
+    public InscriptionStarted(DistributionInscriptionUuid aggregateUuid, long version) {
+        super(aggregateUuid, version);
     }
 
-    public InscriptionStarted(UUID uuid) {
-        super(uuid, 0);
+    public InscriptionStarted(DistributionInscriptionUuid aggregateUuid) {
+        super(aggregateUuid, 0);
     }
 
     public InscriptionStarted() {
-        this(UUID.randomUUID(), 0);
+        this(DistributionInscriptionUuid.randomUUID(), 0);
     }
 
     @Override

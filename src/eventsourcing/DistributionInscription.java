@@ -3,7 +3,6 @@ package eventsourcing;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -11,14 +10,14 @@ import java.util.stream.Collectors;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.9
+ * @version 0.1.12
  */
 public class DistributionInscription {
 
-    private UUID aggregateUuid;
+    private DistributionInscriptionUuid aggregateUuid;
     private ArrayList<Event> events;
 
-    public DistributionInscription(UUID aggregateUuid, ArrayList<Event> events) {
+    public DistributionInscription(DistributionInscriptionUuid aggregateUuid, ArrayList<Event> events) {
         if (aggregateUuid == null) {
             throw new NullPointerException("DistributionInscription's uuid cannot be null");
         }
@@ -27,19 +26,19 @@ public class DistributionInscription {
         this.events = events;
     }
 
-    public DistributionInscription(UUID aggregateUuid) {
+    public DistributionInscription(DistributionInscriptionUuid aggregateUuid) {
         this(aggregateUuid, new ArrayList<>());
     }
 
     public DistributionInscription() {
-        this(UUID.randomUUID());
+        this(DistributionInscriptionUuid.randomUUID());
     }
 
-    public UUID getAggregateUuid() {
+    public DistributionInscriptionUuid getAggregateUuid() {
         return aggregateUuid;
     }
 
-    public InscriptionStarted startInscription(UUID aggregateUuid) {
+    public InscriptionStarted startInscription(DistributionInscriptionUuid aggregateUuid) {
         InscriptionStarted inscriptionStarted = null;
         List<Event> inscriptionStartedList = events
                 .stream()
@@ -54,7 +53,7 @@ public class DistributionInscription {
         return inscriptionStarted;
     }
 
-    public DistributorRegistered registerDistributor(UUID aggregateUuiduuid, DistributorAbstract distributorAbstract) {
+    public DistributorRegistered registerDistributor(DistributionInscriptionUuid aggregateUuiduuid, DistributorAbstract distributorAbstract) {
         DistributorRegistered distributorRegistered = null;
         int nbRegistered = 0;
         boolean started = false;
@@ -80,7 +79,7 @@ public class DistributionInscription {
         return distributorRegistered;
     }
 
-    public DistributorUnregistered unregisterDistributor(UUID aggregateUuiduuid, DistributorAbstract distributorAbstract) {
+    public DistributorUnregistered unregisterDistributor(DistributionInscriptionUuid aggregateUuiduuid, DistributorAbstract distributorAbstract) {
         DistributorUnregistered distributorUnregistered = null;
         int nbRegistered = 0;
         boolean started = false;

@@ -2,17 +2,16 @@ package eventsourcing;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * Projection donnant les noms des distributeurs inscrits
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.9
+ * @version 0.1.12
  */
 public class DistributeurNameList implements IEventHandler {
 
-    private final HashMap<UUID, ArrayList<String>> nameList = new HashMap<>();
+    private final HashMap<DistributionInscriptionUuid, ArrayList<String>> nameList = new HashMap<>();
 
     @Override
     public void handle(Event event) {
@@ -29,8 +28,8 @@ public class DistributeurNameList implements IEventHandler {
         }        
     }
 
-    public ArrayList<String> getNames(UUID uuid) {
-        return nameList.getOrDefault(uuid, new ArrayList<>());
+    public ArrayList<String> getNames(DistributionInscriptionUuid aggregateUuid) {
+        return nameList.getOrDefault(aggregateUuid, new ArrayList<>());
     }
 
 }

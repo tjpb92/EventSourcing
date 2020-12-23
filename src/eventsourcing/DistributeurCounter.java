@@ -1,17 +1,16 @@
 package eventsourcing;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 /**
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.9
+ * @version 0.1.12
  */
 public class DistributeurCounter implements IEventHandler {
 
-    private final HashMap<UUID, Long> counters = new HashMap<>();
+    private final HashMap<DistributionInscriptionUuid, Long> counters = new HashMap<>();
 
     @Override
     public void handle(Event event) {
@@ -26,12 +25,11 @@ public class DistributeurCounter implements IEventHandler {
             counter = this.getCounters(event.getAggregateUuid());
             counter--;
             counters.put(event.getAggregateUuid(), counter);
-        }
-        
+        }       
     }
 
-    public long getCounters(UUID uuid) {
-        return counters.getOrDefault(uuid, 0L);
+    public long getCounters(DistributionInscriptionUuid aggregateUuid) {
+        return counters.getOrDefault(aggregateUuid, 0L);
     }
 
 }

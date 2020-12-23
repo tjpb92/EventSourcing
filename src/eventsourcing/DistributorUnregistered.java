@@ -1,20 +1,18 @@
 package eventsourcing;
 
-import java.util.UUID;
-
 /**
  * Classe définissant l'événement de désinscription d'un distributeur
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.9
+ * @version 0.1.12
  */
 public class DistributorUnregistered extends Event {
     
     private DistributorAbstract distributorAbstract;
 
-    public DistributorUnregistered(UUID uuid, long version, DistributorAbstract distributorAbstract) {
-        super(uuid, version);
+    public DistributorUnregistered(DistributionInscriptionUuid aggregateUuid, long version, DistributorAbstract distributorAbstract) {
+        super(aggregateUuid, version);
 
         if (distributorAbstract == null) {
             throw new NullPointerException("Distributor abstract cannot be null");
@@ -23,7 +21,7 @@ public class DistributorUnregistered extends Event {
     }
 
     public DistributorUnregistered(long version, DistributorAbstract distributor) {
-        this(UUID.randomUUID(), version, distributor);
+        this(DistributionInscriptionUuid.randomUUID(), version, distributor);
     }
 
     public DistributorAbstract getDistributorAbstract() {

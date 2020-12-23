@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  *
  * @author Thierry Baribaud
  * @author Anthony Guerot
- * @version 0.1.10
+ * @version 0.1.12
  */
 public class DistributionInscriptionTest {
 
@@ -145,12 +145,12 @@ public class DistributionInscriptionTest {
     public void testDistributorUnregistered() {
 
         DistributorUnregistered expectedResult = new DistributorUnregistered(AGGREGATE_UUID, 1, new DistributorAbstract(DISTRIBUTOR));
-        System.out.println("expectedResult:"+expectedResult.getVersion());
+//        System.out.println("expectedResult:"+expectedResult.getVersion());
         
         DistributionInscription distributionInscription = new DistributionInscription(AGGREGATE_UUID);
         InscriptionStarted firstInscriptionStarted = distributionInscription.startInscription(AGGREGATE_UUID);
         DistributorUnregistered result = distributionInscription.unregisterDistributor(AGGREGATE_UUID, new DistributorAbstract(DISTRIBUTOR));
-        System.out.println("result:"+result.getVersion());
+//        System.out.println("result:"+result.getVersion());
 
         assertEquals(expectedResult, result);
     }
